@@ -9,6 +9,7 @@ def set_first_row_as_header(df):
     return df[1:]
 
 # Function to preprocess the data
+# Function to preprocess the data
 def preprocess_data_df(excel_file_path):
     xls = pd.ExcelFile(excel_file_path)
     sheet_name = xls.sheet_names[0]
@@ -36,15 +37,16 @@ def preprocess_data_df(excel_file_path):
 
     df_combined = pd.concat([df_al_combined.T, df_ao_combined.T, df_ar_combined.T], axis=0)
     
-    df_row_8 = df_combined.iloc[:3, :]
+    # Slice and update using .loc to avoid SettingWithCopyWarning
+    df_row_8 = df_combined.iloc[:3, :].copy()
     df_row_8["date_type"] = ["Agy/SOFR".strip(), date_al.columns[0], date_ap.columns[0]]
     df_row_8.reset_index(drop=True, inplace=True)
 
-    df_row_24 = df_combined.iloc[3:6, :]
+    df_row_24 = df_combined.iloc[3:6, :].copy()
     df_row_24["date_type"] = ["Agy/SOFR".strip(), date_al.columns[0], date_ap.columns[0]]
     df_row_24.reset_index(drop=True, inplace=True)
 
-    df_row_63 = df_combined.iloc[6:, :]
+    df_row_63 = df_combined.iloc[6:, :].copy()
     df_row_63["date_type"] = ["Agy/SOFR".strip(), date_al.columns[0], date_ap.columns[0]]
     df_row_63.reset_index(drop=True, inplace=True)
 
